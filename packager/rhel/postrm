@@ -1,0 +1,4 @@
+#!/bin/bash
+
+userdel ssp || true
+groupdel ssp || true

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+adduser --quiet --system \
+        --group --home /etc/ssp \
+        --gecos "PM2 Process Manager" ssp
+
+if hash systemctl 2> /dev/null; then
+    {
+        systemctl enable "ssp.service" && \
+            systemctl start "ssp.service"
+    } || echo "ssp could not be registered or started"
+elif hash service 2> /dev/null; then
+    service "ssp" start || echo "ssp could not be registered or started"
+else
+    echo 'Ingnoring ssp auto-startup.'
+    echo 'You can run `ssp startup` as root to do it manually.'
+fi

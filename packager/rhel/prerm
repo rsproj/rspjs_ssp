@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if hash systemctl 2> /dev/null; then
+    systemctl disable "ssp.service" && \
+        systemctl stop "ssp.service" || \
+        echo "ssp wasn't even running!"
+elif hash service 2> /dev/null; then
+    service "ssp" stop || echo "ssp wasn't even running!"
+else
+    echo "Your system does not appear to use upstart, systemd or sysv, so ssp could not be stopped"
+    echo 'Unless these systems were removed since install, no processes have been left running'
+fi
